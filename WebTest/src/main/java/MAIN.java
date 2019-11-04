@@ -1,12 +1,12 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import dao.TopicDao;
 import dao.UserDao;
 import entites.Post;
 import entites.Topic;
 import entites.User;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class MAIN
 {
@@ -32,18 +32,18 @@ public class MAIN
       topic.setDateCreated(new Date());
       topic.setTitle("Topic-" + i);
 
-      List<Post> posts = new ArrayList<>();
-      for (int j = 1; j <= 10; j++)
-      {
-        final Post post = new Post();
-        post.setAuthorId(j);
-        post.setTopic(topic);
-        post.setDateCreated(new Date());
-        post.setText("post " + j + " text ... la-la-la");
-        posts.add(post);
-      }
+        List<Post> posts = new ArrayList<>();
+        for (int j = 1; j <= 10; j++)
+        {
+            final Post post = new Post();
+            post.setAuthorId(j);
+            post.setTopic(topic);
+            post.setDateCreated(new Date());
+            post.setText("post " + j + " text ... la-la-la");
+            posts.add(post);
+        }
 
-      topic.setPosts(posts);
+        topic.setPosts(posts);
 
       topicDao.save(topic);
     }

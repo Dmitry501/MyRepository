@@ -20,6 +20,11 @@
     <servlet-class>servlets.TopicsServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>hello</servlet-name>
+    <servlet-class>servlets.HelloServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>test</servlet-name>
     <url-pattern>/test</url-pattern>
@@ -33,6 +38,11 @@
   <servlet-mapping>
     <servlet-name>topics</servlet-name>
     <url-pattern>/topics</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>hello</servlet-name>
+    <url-pattern>/hello</url-pattern>
   </servlet-mapping>
 
 </web-app>
