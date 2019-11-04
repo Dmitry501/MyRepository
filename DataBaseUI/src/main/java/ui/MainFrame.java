@@ -1,8 +1,6 @@
 package ui;
 
 import db.ConnectionDB;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame
 {
-  private static final Logger log = LogManager.getLogger(MainFrame.class);
   JPanel connectionPanel;
   JPanel tableListPanel;
   JPanel dataPanel;
