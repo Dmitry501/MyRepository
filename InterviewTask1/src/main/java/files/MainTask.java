@@ -55,64 +55,69 @@ public class MainTask
           }
           else
           {
-            temp = new StringBuilder().append("'").append(split[4]).append("'").toString();
+            temp = "'" + split[4] + "'";
           }
 
-          statement.execute(new StringBuilder().append("INSERT INTO OrderBook (PRICE, SIZE, TYPE, COMMENT) VALUES")
-              .append("(" + split[1] + "," + split[2] + ",'" + split[3] + "'," + temp + ")")
-              .toString());
+          statement.execute("INSERT INTO OrderBook (PRICE, SIZE, TYPE, COMMENT) VALUES (" + split[1] + "," + split[2] + ",'"
+               + split[3] + "'," + temp + ")");
 
-            fileWriter.write(new StringBuilder().append("Added " + split[1] + "," + split[2] + "," + split[3] + '\n').toString());
+            fileWriter.write("Added " + split[1] + "," + split[2] + "," + split[3] + '\n');
           }
 
           if(str.charAt(0) == 'q')
           {
             if(split[1].equals("best_bid"))
           {
-            ResultSet resultSet = statement.executeQuery(new StringBuilder().append("SELECT * FROM OrderBook ")
-                .append("WHERE Price=(Select MAX(Price) FROM OrderBook WHERE TYPE = 'B' AND SIZE != 0)").toString());
-            fileWriter.write(new StringBuilder().append("Highest price is " + resultSet.getString("PRICE") + " with ")
-                .append(resultSet.getString("SIZE") + " size\n").toString());
+           ResultSet resultSet = statement.executeQuery("SELECT * FROM OrderBook WHERE PRICE=(SELECT MAX(PRICE)" +
+                    " FROM OrderBook WHERE TYPE = 'B' AND SIZE != 0)");
+
+            fileWriter.write("Highest price is " + resultSet.getString("PRICE") + " with " +
+                resultSet.getString("SIZE") + " size\n");
           }
           if(split[1].equals("best_ask"))
           {
-            ResultSet resultSet = statement.executeQuery(new StringBuilder().append("SELECT * FROM OrderBook ")
-                .append("WHERE Price=(Select MIN(Price) FROM OrderBook WHERE TYPE = 'A' AND SIZE != 0)").toString());
-            fileWriter.write(new StringBuilder().append("Lowest price is " + resultSet.getString("PRICE") + " with ")
-                .append(resultSet.getString("SIZE") + " size\n").toString());
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM OrderBook WHERE Price=(Select MIN(Price)" +
+                " FROM OrderBook WHERE TYPE = 'A' AND SIZE != 0)");
+
+            fileWriter.write("Lowest price is " + resultSet.getString("PRICE") + " with " +
+                resultSet.getString("SIZE") + " size\n");
           }
           if(split.length == 3)
           {
-            ResultSet resultSet = statement.executeQuery(new StringBuilder().append("SELECT * FROM OrderBook Where Size =")
-                .append(split[2] + "").toString());
-            fileWriter.write(new StringBuilder().append("There are " + resultSet.getString("PRICE") + " PRICE for " +
-                split[2] + " SIZE. " + resultSet.getString("TYPE") ).toString());
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM OrderBook Where Size = " + split[2]);
+
+            fileWriter.write("There are " + resultSet.getString("PRICE") + " PRICE for " + split[2] + " SIZE. ");
           }
           }
         if(str.charAt(0) == 'o')
         {
           if (split[1].equals("buy"))
           {
-            ResultSet resultSet = statement.executeQuery(new StringBuilder().append("SELECT * FROM OrderBook WHERE ")
-                .append("TYPE = 'A' AND PRICE=(SELECT MIN(PRICE) From OrderBook WHERE Type = 'A')").toString());
-            fileWriter.write(new StringBuilder().append("You have bought " + split[2])
-                .append(" by " + resultSet.getString("PRICE") + " each").toString());
-            statement.execute(new StringBuilder().append("UPDATE OrderBook SET Size = (Size - ")
-                .append(split[2] + ") WHERE PRICE=(SELECT PRICE FROM OrderBook WHERE TYPE = 'A'")
-                .append(" AND PRICE=(SELECT MIN(PRICE) FROM OrderBook WHERE Type = 'A'))").toString());
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM OrderBook WHERE TYPE = 'A' AND " +
+                "PRICE=(SELECT MIN(PRICE) From OrderBook WHERE Type = 'A')");
+
+            fileWriter.write("You have bought " + split[2] + " by " + resultSet.getString("PRICE") + " each");
+
+            statement.execute("UPDATE OrderBook SET Size = (Size - " + split[2] + ") WHERE PRICE=(SELECT PRICE FROM OrderBook " +
+                "WHERE TYPE = 'A' AND PRICE=(SELECT MIN(PRICE) FROM OrderBook WHERE Type = 'A'))");
           }
           if (split[1].equals("sell"))
           {
-            ResultSet resultSet = statement.executeQuery(new StringBuilder().append("SELECT * FROM OrderBook WHERE ")
-                .append("TYPE = 'B' AND PRICE=(SELECT MAX(PRICE) From OrderBook WHERE Type = 'B')").toString());
-            fileWriter.write(new StringBuilder().append("You have sold " + split[2])
-                .append(" by " + resultSet.getString("PRICE") + " each").toString());
-            statement.execute(new StringBuilder().append("UPDATE OrderBook SET Size = (Size - ")
-                .append(split[2] + ") WHERE PRICE=(SELECT PRICE FROM OrderBook WHERE TYPE = 'B'")
-                .append(" AND PRICE=(SELECT MAX(PRICE) FROM OrderBook WHERE Type = 'B'))").toString());
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM OrderBook WHERE TYPE = 'B' AND PRICE=" +
+                "(SELECT MAX(PRICE) From OrderBook WHERE Type = 'B')");
+
+            fileWriter.write("You have sold " + split[2] + " by " + resultSet.getString("PRICE") + " each");
+
+            statement.execute("UPDATE OrderBook SET Size = (Size - " + split[2] + ") WHERE PRICE=(SELECT PRICE " +
+                "FROM OrderBook WHERE TYPE = 'B' AND PRICE=(SELECT MAX(PRICE) FROM OrderBook WHERE Type = 'B'))");
           }
+
         }
     }
     fileWriter.flush();
   }
+
+
 }
+
+
